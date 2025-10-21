@@ -58,12 +58,11 @@ Starting with Express 5, middleware functions that return a Promise will call `n
 
 Aqui está um exemplo de um simples aplicativo "Hello World" do
 Express, para o qual serão definidas duas funções de middleware:
-The remainder of this article will define and add three middleware functions to the application:
-one called `myLogger` that prints a simple log message, one called `requestTime` that
-displays the timestamp of the HTTP request, and one called `validateCookies` that validates incoming cookies.
+O restante deste artigo definirá e adicionará três funções de middleware ao aplicativo: 
+uma chamada `myLogger` que imprime uma mensagem de log simples, uma chamada `requestTime` que exibe o registro de 
+data e hora da solicitação HTTP e uma chamada `validateCookies` que valida os cookies recebidos.
 
-```js
-const express = require('express')
+```js const express = require('express')
 const app = express()
 
 app.get('/', (req, res) => {
@@ -173,9 +172,9 @@ no navegador.
 
 <h3>Middleware function validateCookies</h3>
 
-Finally, we'll create a middleware function that validates incoming cookies and sends a 400 response if cookies are invalid.
+Por fim, criaremos uma função de middleware que valida os cookies recebidos e envia uma resposta 400 se os cookies forem inválidos. 
 
-Here's an example function that validates cookies with an external async service.
+Aqui está um exemplo de função que valida cookies com um serviço assíncrono externo. 
 
 ```js
 async function cookieValidator (cookies) {
@@ -186,8 +185,7 @@ async function cookieValidator (cookies) {
   }
 }
 ```
-
-Here, we use the [`cookie-parser`](/resources/middleware/cookie-parser.html) middleware to parse incoming cookies off the `req` object and pass them to our `cookieValidator` function. The `validateCookies` middleware returns a Promise that upon rejection will automatically trigger our error handler.
+Aqui, usamos o middleware [`cookie-parser`](/resources/middleware/cookie-parser.html) para analisar os cookies recebidos do objeto `req` e passá-los para nossa função `cookieValidator`. O middleware `validateCookies` retorna uma Promise que, em caso de rejeição, acionará automaticamente nosso manipulador de erros. 
 
 ```js
 const express = require('express')
@@ -214,7 +212,7 @@ app.listen(3000)
 ```
 
 <div class="doc-box doc-notice" markdown="1">
-Note how `next()` is called after `await cookieValidator(req.cookies)`. This ensures that if `cookieValidator` resolves, the next middleware in the stack will get called. If you pass anything to the `next()` function (except the string `'route'` or `'router'`), Express regards the current request as being an error and will skip any remaining non-error handling routing and middleware functions.
+Observe como next()é chamado após await cookieValidator(req.cookies). Isso garante que, se for cookieValidatorresolvido, o próximo middleware na pilha será chamado. Se você passar qualquer coisa para a next()função (exceto a string 'route'ou 'router'), o Express considerará a solicitação atual como um erro e ignorará quaisquer funções de roteamento e middleware restantes que não sejam de tratamento de erros.
 </div>
 
 Como você tem acesso ao objeto da solicitação, ao objeto de
@@ -227,7 +225,7 @@ middlewares no Express](/{{ page.lang }}/guide/using-middleware.html).
 
 <h2>Configurable middleware</h2>
 
-If you need your middleware to be configurable, export a function which accepts an options object or other parameters, which, then returns the middleware implementation based on the input parameters.
+Se você precisar que seu middleware seja configurável, exporte uma função que aceite um objeto de opções ou outros parâmetros, que, então, retorna a implementação do middleware com base nos parâmetros de entrada.
 
 File: `my-middleware.js`
 
@@ -239,8 +237,7 @@ module.exports = function (options) {
   }
 }
 ```
-
-The middleware can now be used as shown below.
+ O middleware agora pode ser usado conforme mostrado abaixo.
 
 ```js
 const mw = require('./my-middleware.js')
@@ -248,4 +245,4 @@ const mw = require('./my-middleware.js')
 app.use(mw({ option1: '1', option2: '2' }))
 ```
 
-Refer to [cookie-session](https://github.com/expressjs/cookie-session) and [compression](https://github.com/expressjs/compression) for examples of configurable middleware.
+Refer to [cookie-session](https://github.com/expressjs/cookie-session) and [compression](https://github.com/expressjs/compression) para exemplos de middleware configurável
